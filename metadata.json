@@ -1,0 +1,7 @@
+{
+  "name": "EcoSense",
+  "description": "A futuristic eco-app concept for an Arm-powered device that uses AI to detect recyclable waste and a dashboard to monitor environmental data like air quality, energy usage, and waste statistics.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
