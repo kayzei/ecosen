@@ -132,7 +132,7 @@ Mobile backpack version (for field workers)
 Mesh-network village monitoring
 
 📦 Installation (Quick Start)
-git clone https://github.com/your-username/ecosense
+git clone https://github.com/kayzei/ecosen
 cd ecosense
 pip install -r requirements.txt
 python main.py
