@@ -22,15 +22,15 @@ const geminiService = {
 
     let promptText = "";
     if (mode === 'waste') {
-        promptText = "Analyze this image to identify recyclable waste. Identify items that are plastic, glass, organic, or metal. For each identified item, provide its name (e.g. 'Plastic Bottle', 'Apple Core'), a confidence score, and a bounding box.";
+        promptText = "Analyze this image to identify recyclable waste. Identify items that are plastic, glass, organic, or metal. For each identified item, provide its name, a confidence score, a bounding box, and a specific disposal recommendation (e.g. 'Rinse and recycle', 'Compost bin').";
     } else if (mode === 'crop') {
-        promptText = "Analyze this image for agricultural health. Identify crops (e.g., Maize, Cassava, Tomato), and specifically look for signs of disease (Blight, Rust), pests, nutrient deficiency, or healthy growth. Label the detected areas (e.g., 'Maize (Healthy)', 'Tomato (Blight)'). Provide confidence and bounding boxes.";
+        promptText = "Analyze this image for agricultural health. Identify crops and signs of disease or pests. Label the detected areas. Provide confidence, bounding boxes, and a farming recommendation (e.g. 'Apply fungicide', 'Increase watering', 'Monitor closely').";
     } else if (mode === 'water') {
-        promptText = "Analyze this image for water source safety. Identify the water source (e.g., Borehole, River, Bucket, Tap) and visual indicators of quality or risk (e.g., Clear Water, Turbid/Muddy, Algae, Livestock Nearby). Label the detected areas. Provide confidence and bounding boxes.";
+        promptText = "Analyze this image for water source safety. Identify the water source and visual indicators of quality. Label the detected areas. Provide confidence, bounding boxes, and a safety recommendation (e.g. 'Boil before drinking', 'Safe for irrigation', 'Test for bacteria').";
     }
 
     const textPart = {
-      text: `${promptText} Return the result as a JSON array of objects with 'label', 'confidence' (0.0-1.0), and 'boundingBox' [ymin, xmin, ymax, xmax]. If nothing relevant is found, return an empty array.`,
+      text: `${promptText} Return the result as a JSON array of objects with 'label', 'confidence' (0.0-1.0), 'boundingBox' [ymin, xmin, ymax, xmax], and 'recommendation' (string).`,
     };
     
     const schema = {
@@ -38,23 +38,17 @@ const geminiService = {
         items: {
           type: Type.OBJECT,
           properties: {
-            label: { 
-              type: Type.STRING, 
-              description: "The label of the detected object (e.g., 'Plastic Bottle', 'Maize (Healthy)')."
-            },
-            confidence: { 
-              type: Type.NUMBER,
-              description: "The confidence score of the detection, from 0.0 to 1.0."
-            },
+            label: { type: Type.STRING },
+            confidence: { type: Type.NUMBER },
             boundingBox: {
               type: Type.ARRAY,
-              description: "The bounding box coordinates [x_min, y_min, x_max, y_max] normalized to image dimensions.",
               items: { type: Type.NUMBER },
               minItems: 4,
               maxItems: 4
-            }
+            },
+            recommendation: { type: Type.STRING, description: "Actionable advice or tip for this item." }
           },
-          required: ['label', 'confidence', 'boundingBox']
+          required: ['label', 'confidence', 'boundingBox', 'recommendation']
         }
     };
 

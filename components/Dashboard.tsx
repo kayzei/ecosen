@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
   const [offlineMode, setOfflineMode] = useState(false);
 
   return (
-    <div className="space-y-5 text-white pb-6">
+    <div className="space-y-5 text-white p-4">
       {/* Offline Mode Toggle Simulation */}
       <div className="flex justify-between items-center px-2">
           <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Environment</h2>

@@ -5,6 +5,7 @@ export interface DetectedObject {
   label: string;
   confidence: number;
   boundingBox: [number, number, number, number]; // [x_min, y_min, x_max, y_max] as percentages
+  recommendation: string;
 }
 
 export interface ScanHistoryItem {

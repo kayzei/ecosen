@@ -52,13 +52,32 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 font-sans">
+      <style>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(0,0,0,0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(34,211,238,0.3);
+          border-radius: 2px;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+      `}</style>
       <div className="w-full max-w-sm h-[800px] max-h-[90vh] bg-black rounded-[40px] border-8 border-gray-700 shadow-2xl shadow-cyan-500/10 overflow-hidden flex flex-col">
         {/* Notch */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-700 rounded-b-xl z-20"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-gray-700 rounded-b-xl z-30 pointer-events-none"></div>
 
-        <div className="flex-grow bg-gradient-to-br from-slate-900 via-slate-900 to-gray-800 flex flex-col relative">
+        <div className="flex-grow bg-slate-900 flex flex-col relative overflow-hidden">
           <Header />
-          <main className="flex-grow overflow-y-auto p-4 pb-20">
+          <main className="flex-grow overflow-y-auto overflow-x-hidden no-scrollbar pb-24">
             {view === 'camera' && (
               <CameraView 
                 history={scanHistory}
@@ -69,8 +88,8 @@ const App: React.FC = () => {
             {view === 'dashboard' && <Dashboard />}
           </main>
           
-          <footer className="absolute bottom-0 left-0 right-0 h-20 bg-slate-900/80 backdrop-blur-sm border-t border-gray-700/50 rounded-b-[32px]">
-             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-28 h-1 bg-gray-400 rounded-full mb-2"></div>
+          <footer className="absolute bottom-0 left-0 right-0 h-20 bg-slate-900/90 backdrop-blur-lg border-t border-gray-700/50 rounded-b-[32px] z-20">
+             <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-28 h-1 bg-gray-500 rounded-full mb-1"></div>
             <nav className="flex h-full items-center justify-around px-4 pt-1">
               <NavItem
                 label="Detect"
